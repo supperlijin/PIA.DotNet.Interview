@@ -1,0 +1,1 @@
+using System;using System.Collections.Generic;using System.Text;namespace PIA.DotNet.Interview.Core.Models{    public class ChartModel    {        public int Completed { get; set; }        public int Incomplete { get; set; }    }}

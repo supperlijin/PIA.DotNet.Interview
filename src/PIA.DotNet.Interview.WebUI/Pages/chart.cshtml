@@ -1,0 +1,31 @@
+﻿@page
+@model chartModel
+@{
+    ViewData["Title"] = "chart";
+}
+@using UI_BL
+@inject TaskService _taskService
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <div id="chartmain" style="width:600px; height: 400px;"></div>
+@{ 
+    var item = await _taskService.chart();
+}
+
+    <script type="text/javascript">
+        var option = {
+            title: {
+                text: 'ECharts Statistik'
+            },
+            series: [{
+                name: 'tasks',
+                type: 'pie',
+                radius: '60%',
+                data: [
+                    { value: @item.Completed, name: 'Completed' },
+                    { value: @item.Incomplete, name: 'incomplete' }
+                ]
+            }]
+        };
+        var myChart = echarts.init(document.getElementById('chartmain'));
+        myChart.setOption(option);
+    </script>

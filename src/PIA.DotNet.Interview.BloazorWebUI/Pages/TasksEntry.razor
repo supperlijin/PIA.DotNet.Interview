@@ -1,0 +1,52 @@
+﻿@page "/TasksEntry"
+@using PIA.DotNet.Interview.BloazorWebUI.Data
+@inject WeatherForecastService ForecastService
+
+
+<h1>Tasks</h1>
+<p>The tasks for this interview sample are as follows:</p>
+
+<div class="text-left">
+    <h1 class="alert-success text-center">Tasks</h1>
+    <h3>The tasks for this interview sample are as follows:</h3>
+    @if (tasklist == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        @foreach (var task in tasklist)
+        {
+            <div class="card mb-3 @(task.IsFinished ? "text-white bg-primary" : "bg-light")">
+                <div class="card-header">
+                    Task @task.Id
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@task.Title</h5>
+                    <p class="card-text">@task.Description</p>
+                    <p class="card-text"></p>
+                    @if (!String.IsNullOrWhiteSpace(task.Example))
+                    {
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" src="@task.Example" alt="Card image" style="width:100%">
+                            <div class="card-footer">
+                                <small class="text-muted">Example</small>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+
+    </div>
+
+
+@code {
+    private List<PIA.DotNet.Interview.Core.Models.TaskViewModel> tasklist;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tasklist = await ForecastService.Get();
+    }
+}
